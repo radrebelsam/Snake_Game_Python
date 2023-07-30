@@ -1,26 +1,15 @@
 from turtle import Turtle, Screen
-
+import time
 
 # set screen
 screen = Screen() # create screen
-screen.setup(width=600, height=600) # set screen size
+screen.setup(width=1200, height=1200) # set screen size
 screen.bgcolor("black") # set background color
 screen.title("Snake Game") # set title
-# exit screen on click
+screen.tracer(0) # turn off animation
 
 
-# create snake body method 1
-""" block_1 = Turtle(shape="square")
-block_1.color("white")
-block_2 = Turtle(shape="square")
-block_2.color("white")
-block_2.goto(-20, 0)
-block_3 = Turtle(shape="square")
-block_3.color("white")
-block_3.goto(-40, 0) """
-
-
-# create snake body method 2
+# create snake body
 # set starting position
 starting_position = [(0, 0), (-20, 0), (-40, 0)]
 # create snake body segments
@@ -34,10 +23,23 @@ for position in starting_position:
 # make snake move continuously
 game_is_on = True
 while game_is_on:
-    for segment in segments:
-        segment.forward(20)
+    
+    screen.update() # update all segments together on screen
+    time.sleep(1) # delay 1 second
+    
+    # make 2nd and 3rd segment follow previous segment
+    for i in range(start=len(segments)-1, stop=0, step=-1):
+        segments[i].goto(segments[i-1].xcor(), segments[i-1].ycor())
+    
+    
+    segments[0].forward(20) # move 1st segment
+    
+    
 
 
 
 
 
+
+
+screen.exitonclick() # exit screen on click
